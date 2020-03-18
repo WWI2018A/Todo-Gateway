@@ -7,9 +7,17 @@ apiEndpoints:
   api:
     host: localhost
     paths: '/ip'
+  lea:
+    host: localhost
+    paths: 
+     - '/profile'
+     - '/auth'
+     - '/todo'
 serviceEndpoints:
   httpbin:
     url: 'https://httpbin.org'
+  mock:
+    url: 'http://localhost:3000'
 policies:
   - basic-auth
   - cors
@@ -29,4 +37,14 @@ pipelines:
       - proxy:
           - action:
               serviceEndpoint: httpbin 
+              changeOrigin: true
+  leapipe:
+    apiEndpoints:
+      - lea
+    policies:
+    # Uncomment `key-auth:` when instructed to in the Getting Started guide.
+    # - key-auth:
+      - proxy:
+          - action:
+              serviceEndpoint: mock 
               changeOrigin: true
