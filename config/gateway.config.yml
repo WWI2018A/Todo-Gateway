@@ -6,20 +6,22 @@ admin:
 apiEndpoints:
   profile:
     host: localhost
-    paths: '/profile'
+    paths: 
+     - '/api/v1/profiles'
+     - '/api/v1/profiles/:id'
   auth:
     host: localhost
-    paths: '/auth'
+    paths: '/api/v1/auth*'
   todo:
     host: localhost
-    paths: '/todo'
+    paths: '/api/v1/todos*'
 serviceEndpoints:
   profile_service:
-    url: 'http://localhost:3000'
+    url: 'http://localhost:3000/'
   auth_service:
-    url: 'http://localhost:3000'
+    url: 'http://localhost:3000/'
   todo_service:
-    url: 'http://localhost:3000'
+    url: 'http://localhost:3000/'
 policies:
   - basic-auth
   - cors
@@ -34,8 +36,6 @@ pipelines:
     apiEndpoints:
       - profile
     policies:
-    # Uncomment `key-auth:` when instructed to in the Getting Started guide.
-    # - key-auth:
       - proxy:
           - action:
               serviceEndpoint: profile_service
@@ -44,8 +44,6 @@ pipelines:
     apiEndpoints:
       - auth
     policies:
-    # Uncomment `key-auth:` when instructed to in the Getting Started guide.
-    # - key-auth:
       - proxy:
           - action:
               serviceEndpoint: auth_service
@@ -54,8 +52,6 @@ pipelines:
     apiEndpoints:
       - todo
     policies:
-    # Uncomment `key-auth:` when instructed to in the Getting Started guide.
-    # - key-auth:
       - proxy:
           - action:
               serviceEndpoint: todo_service
