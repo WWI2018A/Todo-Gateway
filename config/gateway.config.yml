@@ -36,7 +36,7 @@ pipelines:
   profile_pipe:
     apiEndpoints:
       - profile
-     policies:
+    policies:
         - rewrite:           
           -
             condition:
@@ -51,7 +51,7 @@ pipelines:
   auth_pipe:
     apiEndpoints:
       - auth
-     policies:
+    policies:
         - rewrite:           
           -
             condition:
@@ -66,7 +66,7 @@ pipelines:
   todo_pipe:
     apiEndpoints:
       - todo
-   policies:
+    policies:
         - rewrite:           
           -
             condition:
