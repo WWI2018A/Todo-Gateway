@@ -31,28 +31,50 @@ policies:
   - oauth2
   - proxy
   - rate-limit
+  - rewrite
 pipelines:
   profile_pipe:
     apiEndpoints:
       - profile
-    policies:
-      - proxy:
+     policies:
+        - rewrite:           
+          -
+            condition:
+              name: regexpmatch
+              match: ^/api/v1/?(.*)$
+            action:
+              rewrite: /$1
+        - proxy:
           - action:
               serviceEndpoint: profile_service
-              changeOrigin: true
+              changeOrigin: false
   auth_pipe:
     apiEndpoints:
       - auth
-    policies:
-      - proxy:
+     policies:
+        - rewrite:           
+          -
+            condition:
+              name: regexpmatch
+              match: ^/api/v1/?(.*)$
+            action:
+              rewrite: /$1
+        - proxy:
           - action:
               serviceEndpoint: auth_service
-              changeOrigin: true
+              changeOrigin: false
   todo_pipe:
     apiEndpoints:
       - todo
-    policies:
-      - proxy:
+   policies:
+        - rewrite:           
+          -
+            condition:
+              name: regexpmatch
+              match: ^/api/v1/?(.*)$
+            action:
+              rewrite: /$1
+        - proxy:
           - action:
               serviceEndpoint: todo_service
-              changeOrigin: true
+              changeOrigin: false
