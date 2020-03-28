@@ -31,6 +31,9 @@ policies:
   - proxy
   - rate-limit
   - rewrite
+  - jwt
+  - request-transformer
+  - keycloak-protect
 pipelines:
   profile_pipe:
     apiEndpoints:
@@ -43,6 +46,19 @@ pipelines:
               match: ^/api/v1/?(.*)$
             action:
               rewrite: /$1
+        - log: 
+            action: 
+              message: 'profile ${req.method}'
+        - jwt:
+            action: 
+              secretOrPublicKey: 'secretKey'
+              CheckCredentialExistence: false
+        - request-transformer: 
+            action:
+              body:
+                add:
+                  user: req.user
+        - keycloak-protect:
         - proxy:
           - action:
               serviceEndpoint: profile_service
@@ -58,6 +74,18 @@ pipelines:
               match: ^/api/v1/?(.*)$
             action:
               rewrite: /$1
+        - log: 
+            action: 
+              message: 'auth ${req.method}'
+        - jwt:
+            action: 
+              secretOrPublicKey: 'secretKey'
+              CheckCredentialExistence: false
+        - request-transformer: 
+            action:
+              body:
+                add:
+                  user: req.user
         - proxy:
           - action:
               serviceEndpoint: auth_service
@@ -73,6 +101,18 @@ pipelines:
               match: ^/api/v1/?(.*)$
             action:
               rewrite: /$1
+        - log: 
+            action: 
+              message: 'todo ${req.method}'
+        - jwt:
+            action: 
+              secretOrPublicKey: 'secretKey'
+              CheckCredentialExistence: false
+        - request-transformer: 
+            action:
+              body:
+                add:
+                  user: req.user
         - proxy:
           - action:
               serviceEndpoint: todo_service
