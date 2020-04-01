@@ -6,8 +6,7 @@ admin:
 apiEndpoints:
   profile:
     host: localhost
-    paths: 
-     - '/api/v1/profiles*'
+    paths: '/api/v1/profiles*'
   auth:
     host: localhost
     paths: '/api/v1/auth*'
@@ -16,11 +15,11 @@ apiEndpoints:
     paths: '/api/v1/todos*'
 serviceEndpoints:
   profile_service:
-    url: 'http://localhost:3000/'
+    url: 'http://localhost:4000/'
   auth_service:
-    url: 'http://localhost:3000/'
+    url: 'http://localhost:4000/'
   todo_service:
-    url: 'http://localhost:3000/'
+    url: 'http://localhost:4000/'
 policies:
   - basic-auth
   - cors
@@ -49,16 +48,12 @@ pipelines:
         - log: 
             action: 
               message: 'profiles ${req.method}'
-        #- jwt:
-        #    action: 
-        #      secretOrPublicKey: 'secretKey'
-        #      CheckCredentialExistence: false
         - request-transformer: 
             action:
-              body:
+              headers:
                 add:
-                  user: req.user
-        #- keycloak-protect:
+                  #x-uid: req.cemail
+        - keycloak-protect:
         - proxy:
           - action:
               serviceEndpoint: profile_service
