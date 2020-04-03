@@ -32,7 +32,7 @@ plugins:
     package: express-gateway-keycloak
     keycloakConfig:
       realm: "quickstart"
-      auth-server-url: "http://193.196.55.125:8080/auth"
+      auth-server-url: "https://9bedecec-b4fa-4c99-920a-ad988c144210.ma.bw-cloud-instance.org:8443/auth"
       ssl-required: external
       bearer-only: true
       confidential-port: 0

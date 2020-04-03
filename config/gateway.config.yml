@@ -48,12 +48,15 @@ pipelines:
         - log: 
             action: 
               message: 'profiles ${req.method}'
-        - request-transformer: 
-            action:
-              headers:
-                add:
+        #- request-transformer: 
+            #action:
+              #headers:
+                #add:
                   #x-uid: req.cemail
         - keycloak-protect:
+        - expression:
+          - action:
+              jscode: 'req.headers["x-uid"] = req.kauth.grant.access_token.content.email;'          
         - proxy:
           - action:
               serviceEndpoint: profile_service
