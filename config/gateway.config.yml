@@ -1,5 +1,5 @@
 http:
-  port: 3000
+  port: 8080
 admin:
   port: 9876
   host: localhost
@@ -19,7 +19,7 @@ serviceEndpoints:
   auth_service:
     url: 'http://localhost:4000/'
   todo_service:
-    url: 'http://localhost:4000/'
+    url: '193.196.54.70:8080/'
 policies:
   - basic-auth
   - cors
@@ -48,11 +48,6 @@ pipelines:
         - log: 
             action: 
               message: 'profiles ${req.method}'
-        #- request-transformer: 
-            #action:
-              #headers:
-                #add:
-                  #x-uid: req.cemail
         - keycloak-protect:
         - expression:
           - action:
@@ -75,11 +70,9 @@ pipelines:
         - log: 
             action: 
               message: 'auth ${req.method}'
-        - request-transformer: 
-            action:
-              body:
-                add:
-                  user: req.user
+        - expression:
+          - action:
+              jscode: 'req.headers["x-uid"] = req.kauth.grant.access_token.content.email;' 
         - proxy:
           - action:
               serviceEndpoint: auth_service
@@ -98,12 +91,11 @@ pipelines:
         - log: 
             action: 
               message: 'todos ${req.method}'
-        - keycloak-protect:
-        - request-transformer: 
-            action:
-              body:
-                add:
-                  user: req.user
+        #- keycloak-protect:
+        - expression:
+          - action:
+              jscode: 'req.headers["x-uid"] = "user-ffb7c974-342b-4e58-8d9c-768fe5718ff5"'
+              #req.kauth.grant.access_token.content.email;' 
         - proxy:
           - action:
               serviceEndpoint: todo_service
