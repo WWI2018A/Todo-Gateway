@@ -11,7 +11,7 @@ apiEndpoints:
     host: localhost
     paths: '/api/v1/auth*'
   todo:
-    host: 193.196.54.70
+    host: 193.196.54.215
     paths: '/api/v1/todos*'
   ui: 
     host: localhost
