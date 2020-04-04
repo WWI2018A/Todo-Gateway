@@ -11,7 +11,7 @@ apiEndpoints:
     host: localhost
     paths: '/api/v1/auth*'
   todo:
-    host: 193.196.54.215
+    host: 0f1e94dc-2f46-44c5-8aba-b4cc2da9bfb5.ma.bw-cloud-instance.org
     paths: '/api/v1/todos*'
   ui: 
     host: localhost
@@ -22,7 +22,7 @@ serviceEndpoints:
   auth_service:
     url: 'http://localhost:4000/'
   todo_service:
-    url: 'http://52f7d3c5-febe-4455-84cf-4e8c7558634b.ma.bw-cloud-instance.org:8080/'
+    url: '193.196.54.70:8080/'
   ui_service: 
     url: 'http://localhost:4000/'
 policies:
