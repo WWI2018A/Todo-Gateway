@@ -13,12 +13,17 @@ apiEndpoints:
   todo:
     host: localhost
     paths: '/api/v1/todos*'
+  ui: 
+    host: localhost
+    paths: 'api/v1/'
 serviceEndpoints:
   profile_service:
     url: 'http://localhost:4000/'
   auth_service:
     url: 'http://localhost:4000/'
   todo_service:
+    url: 'http://localhost:4000/'
+  ui_service: 
     url: 'http://localhost:4000/'
 policies:
   - basic-auth
@@ -108,3 +113,14 @@ pipelines:
           - action:
               serviceEndpoint: todo_service
               changeOrigin: false
+    ui_pipe:
+      apiEndpoints:
+        - ui
+      policies:
+        - log:
+          action:
+            message: 'ui ${req.method}'
+        - proxy:
+          - action:
+              serviceEnpoint: ui_service 
+              changeOrigin: false 
