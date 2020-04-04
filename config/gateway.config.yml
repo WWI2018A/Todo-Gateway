@@ -11,8 +11,8 @@ apiEndpoints:
     host: localhost
     paths: '/api/v1/auth*'
   todo:
-    host: '0f1e94dc-2f46-44c5-8aba-b4cc2da9bfb5.ma.bw-cloud-instance.org'
-    paths: '/api/v1/todos*'
+    host: '*'
+    paths: /api/v1/todos*
   ui: 
     host: '0f1e94dc-2f46-44c5-8aba-b4cc2da9bfb5.ma.bw-cloud-instance.org'
     paths: '/api/v1/'
