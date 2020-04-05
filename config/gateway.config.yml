@@ -12,7 +12,7 @@ apiEndpoints:
     paths: '/api/v1/auth*'
   todo:
     host: '*'
-    paths: '/api/v1/todos*'
+    paths: '/api/v1/todos/*'
   ui: 
     host: '0f1e94dc-2f46-44c5-8aba-b4cc2da9bfb5.ma.bw-cloud-instance.org'
     paths: '/api/v1/'
@@ -95,7 +95,7 @@ pipelines:
               name: regexpmatch
               match: ^/api/v1/?(.*)$
             action:
-              rewrite: /$1
+              rewrite: /$1/
         - log: 
             action: 
               message: 'todos ${req.method}'
