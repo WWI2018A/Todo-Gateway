@@ -6,13 +6,13 @@ admin:
 apiEndpoints:
   profile:
     host: '*'
-    paths: '/api/v1/'
+    paths: '/api/v1/profiles*'
   auth:
     host: localhost
     paths: '/api/v1/auth*'
   todo:
     host: '*'
-    paths: /api/v1/todos
+    paths: '/api/v1/todos*'
   ui: 
     host: '0f1e94dc-2f46-44c5-8aba-b4cc2da9bfb5.ma.bw-cloud-instance.org'
     paths: '/api/v1/'
@@ -58,7 +58,8 @@ pipelines:
         #- keycloak-protect:
         - expression:
           - action:
-              jscode: 'req.headers["x-uid"] = req.kauth.grant.access_token.content.email;'          
+              jscode: 'req.headers["x-uid"] = "user-ffb7c974-342b-4e58-8d9c-768fe5718ff5"'
+              #req.kauth.grant.access_token.content.email;'          
         - proxy:
           - action:
               serviceEndpoint: profile_service
