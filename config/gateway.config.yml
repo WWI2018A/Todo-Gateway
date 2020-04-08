@@ -8,21 +8,19 @@ apiEndpoints:
     host: '*'
     paths: '/api/v1/profiles*'
   auth:
-    host: localhost
+    host: '*'
     paths: '/api/v1/auth*'
   todo:
     host: '*'
-    paths: '/api/v1/todos/*'
+    paths: '/api/v1/todos*'
   ui: 
     host: '0f1e94dc-2f46-44c5-8aba-b4cc2da9bfb5.ma.bw-cloud-instance.org'
     paths: '/api/v1/'
 serviceEndpoints:
   profile_service:
     url: 'http://193.196.54.93:3000'
-      #'http://b9626e27-87c5-43f3-8666-aeaf34d69979.ma.bw-cloud-instance.org:3000/'
-      #'http://193.196.54.93:3000'
   auth_service:
-    url: 'http://localhost:4000/'
+    url: 'http://4da98db6-3e0d-459d-8025-761d2b6e812d.ma.bw-cloud-instance.org:8080/'
   todo_service:
     url: 'http://193.196.54.70:8080/'
   ui_service: 
@@ -45,7 +43,7 @@ pipelines:
     apiEndpoints:
       - profile
     policies:
-        - rewrite:           
+        - rewrite: &rewrite        
           -
             condition:
               name: regexpmatch
@@ -55,11 +53,10 @@ pipelines:
         - log: 
             action: 
               message: 'profiles ${req.method}'
-        #- keycloak-protect:
+        - keycloak-protect:
         - expression:
           - action:
-              jscode: 'req.headers["x-uid"] = "user-ffb7c974-342b-4e58-8d9c-768fe5718ff5"'
-              #req.kauth.grant.access_token.content.email;'          
+              jscode: 'req.headers["x-uid"] = req.kauth.grant.access_token.content.email;'          
         - proxy:
           - action:
               serviceEndpoint: profile_service
@@ -68,13 +65,7 @@ pipelines:
     apiEndpoints:
       - auth
     policies:
-        - rewrite:           
-          -
-            condition:
-              name: regexpmatch
-              match: ^/api/v1/?(.*)$
-            action:
-              rewrite: /$1
+        - rewrite: *rewrite
         - log: 
             action: 
               message: 'auth ${req.method}'
@@ -89,13 +80,7 @@ pipelines:
     apiEndpoints:
       - todo
     policies:
-        - rewrite:           
-          -
-            condition:
-              name: regexpmatch
-              match: ^/api/v1/?(.*)$
-            action:
-              rewrite: /$1/
+        - rewrite: *rewrite
         - log: 
             action: 
               message: 'todos ${req.method}'
