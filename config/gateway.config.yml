@@ -65,7 +65,13 @@ pipelines:
     apiEndpoints:
       - auth
     policies:
-        - rewrite: *rewrite
+        - rewrite:
+          -
+            condition:
+              name: regexpmatch
+              match: ^/api/v1/profiles/?(.*)$
+            action:
+              rewrite: /$1
         - log: 
             action: 
               message: 'auth ${req.method}'
@@ -80,7 +86,13 @@ pipelines:
     apiEndpoints:
       - todo
     policies:
-        - rewrite: *rewrite
+        - rewrite:
+          -
+            condition:
+              name: regexpmatch
+              match: ^/api/v1/profiles/?(.*)$
+            action:
+              rewrite: /$1
         - log: 
             action: 
               message: 'todos ${req.method}'
