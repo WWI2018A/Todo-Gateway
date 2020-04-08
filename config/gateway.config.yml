@@ -15,12 +15,12 @@ apiEndpoints:
     paths: '/api/v1/todos*'
   ui: 
     host: '0f1e94dc-2f46-44c5-8aba-b4cc2da9bfb5.ma.bw-cloud-instance.org'
-    paths: '/api/v1/'
+    paths: '/api/v1/ui'
 serviceEndpoints:
   profile_service:
     url: 'http://193.196.54.93:3000'
   auth_service:
-    url: 'http://4da98db6-3e0d-459d-8025-761d2b6e812d.ma.bw-cloud-instance.org:8080/'
+    url: 'http://193.196.54.85:8080/'
   todo_service:
     url: 'http://193.196.54.70:8080/'
   ui_service: 
@@ -43,7 +43,7 @@ pipelines:
     apiEndpoints:
       - profile
     policies:
-        - rewrite: &rewrite        
+        - rewrite:         
           -
             condition:
               name: regexpmatch
@@ -75,9 +75,6 @@ pipelines:
         - log: 
             action: 
               message: 'auth ${req.method}'
-        #- expression:
-          #- action:
-              #jscode: 'req.headers["x-uid"] = req.kauth.grant.access_token.content.email;' 
         - proxy:
           - action:
               serviceEndpoint: auth_service
