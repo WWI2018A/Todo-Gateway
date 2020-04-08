@@ -75,9 +75,9 @@ pipelines:
         - log: 
             action: 
               message: 'auth ${req.method}'
-        - expression:
-          - action:
-              jscode: 'req.headers["x-uid"] = req.kauth.grant.access_token.content.email;' 
+        #- expression:
+          #- action:
+              #jscode: 'req.headers["x-uid"] = req.kauth.grant.access_token.content.email;' 
         - proxy:
           - action:
               serviceEndpoint: auth_service
