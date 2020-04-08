@@ -69,7 +69,7 @@ pipelines:
           -
             condition:
               name: regexpmatch
-              match: ^/api/v1/profiles/?(.*)$
+              match: ^/api/v1/auth/?(.*)$
             action:
               rewrite: /$1
         - log: 
@@ -90,7 +90,7 @@ pipelines:
           -
             condition:
               name: regexpmatch
-              match: ^/api/v1/profiles/?(.*)$
+              match: ^/api/v1/todos/?(.*)$
             action:
               rewrite: /$1
         - log: 
