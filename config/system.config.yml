@@ -2,11 +2,7 @@
 db:
   redis:
     emulate: true
-    namespace: EG
-
-#plugins:
-  # express-gateway-plugin-example:
-  #   param1: 'param from system.config'
+    namespace: EG 
 
 crypto:
   cipherKey: sensitiveKey

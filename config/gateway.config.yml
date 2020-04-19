@@ -47,7 +47,7 @@ pipelines:
           -
             condition:
               name: regexpmatch
-              match: ^/api/v1/profiles/?(.*)$
+              match: ^/api/v1/?(.*)$
             action:
               rewrite: /$1
         - log: 
@@ -93,11 +93,10 @@ pipelines:
         - log: 
             action: 
               message: 'todos ${req.method}'
-        #- keycloak-protect:
+        - keycloak-protect:
         - expression:
           - action:
-              jscode: 'req.headers["x-uid"] = "user-ffb7c974-342b-4e58-8d9c-768fe5718ff5"'
-              #req.kauth.grant.access_token.content.email;' 
+              jscode: 'req.headers["x-uid"] = req.kauth.grant.access_token.content.email'
         - proxy:
           - action:
               serviceEndpoint: todo_service
