@@ -56,7 +56,7 @@ pipelines:
         - keycloak-protect:
         - expression:
           - action:
-              jscode: 'req.headers["x-uid"] = req.kauth.grant.access_token.content.email;'          
+              jscode: 'req.headers["x-uid"] = req.kauth.grant.access_token.content.preferred_username;'          
         - proxy:
           - action:
               serviceEndpoint: profile_service
@@ -96,7 +96,7 @@ pipelines:
         - keycloak-protect:
         - expression:
           - action:
-              jscode: 'req.headers["x-uid"] = req.kauth.grant.access_token.content.email'
+              jscode: 'req.headers["x-uid"] = req.kauth.grant.access_token.content.preferred_username'
         - proxy:
           - action:
               serviceEndpoint: todo_service
