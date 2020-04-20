@@ -93,6 +93,12 @@ pipelines:
         - log: 
             action: 
               message: 'todos ${req.method}'
+         -
+          cors:
+            -
+              action:
+                origin: '*'
+                methods: 'HEAD,PUT,PATCH,POST,DELETE'
         - keycloak-protect:
         - expression:
           - action:
