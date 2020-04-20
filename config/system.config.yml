@@ -27,9 +27,9 @@ plugins:
   express-gateway-keycloak:
     package: express-gateway-keycloak
     keycloakConfig:
-      realm: "quickstart"
+      realm: "todo-auth"
       auth-server-url: "https://0f1e94dc-2f46-44c5-8aba-b4cc2da9bfb5.ma.bw-cloud-instance.org/api/v1/auth/"
       ssl-required: external
       bearer-only: true
       confidential-port: 0
-      resource: "service-nodejs" 
+      resource: "todo-api" 
