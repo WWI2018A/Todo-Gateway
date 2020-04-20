@@ -9,9 +9,7 @@ apiEndpoints:
     paths: '/api/v1/profiles*'
   auth:
     host: '*'
-    paths: 
-      - '/auth*'
-      - '/api/v1/auth*'
+    paths: '/api/v1/auth*'
   todo:
     host: '*'
     paths: '/api/v1/todos*'
@@ -67,13 +65,13 @@ pipelines:
     apiEndpoints:
       - auth
     policies:
-        #- rewrite:
-          #-
-            #condition:
-              #name: regexpmatch
-              #match: ^/api/v1/?(.*)$
-            #action:
-              #rewrite: /$1
+        - rewrite:
+          -
+            condition:
+              name: regexpmatch
+              match: ^/api/v1/?(.*)$
+            action:
+              rewrite: /$1
         - log: 
             action: 
               message: 'auth ${req.method}'
