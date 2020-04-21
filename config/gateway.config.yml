@@ -123,6 +123,11 @@ pipelines:
       - log: 
           action: 
             message: 'frontend ${req.method}'
+        - cors:
+          -
+            action:
+              origin: '*'
+              methods: 'HEAD,PUT,PATCH,POST,DELETE'
       - proxy:
         - action:
             serviceEndpoint: frontend_service
