@@ -15,7 +15,12 @@ apiEndpoints:
     paths: '/api/v1/todos*'
   frontend:
     host: '*'
-    paths: '/'
+    paths: 
+      - '/'
+      - '/_nuxt*'
+      - '/todoLists'
+      - '/profiles'
+      - '/about'
 serviceEndpoints:
   profile_service:
     url: 'http://193.196.54.93:3000'
@@ -121,4 +126,5 @@ pipelines:
       - proxy:
         - action:
             serviceEndpoint: frontend_service
-            changeOrigin: false
+            changeOrigin: true
+            xfwd: true
