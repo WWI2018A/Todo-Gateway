@@ -82,6 +82,11 @@ pipelines:
               match: ^/api/v1/?(.*)$
             action:
               rewrite: /$1
+        - cors:
+          -
+            action:
+              origin: '*'
+              methods: 'HEAD,PUT,PATCH,POST,DELETE'
         - log: 
             action: 
               message: 'auth ${req.method}'
@@ -123,11 +128,11 @@ pipelines:
       - log: 
           action: 
             message: 'frontend ${req.method}'
-        - cors:
-          -
-            action:
-              origin: '*'
-              methods: 'HEAD,PUT,PATCH,POST,DELETE'
+      - cors:
+        -
+          action:
+            origin: '*'
+            methods: 'HEAD,PUT,PATCH,POST,DELETE'
       - proxy:
         - action:
             serviceEndpoint: frontend_service
