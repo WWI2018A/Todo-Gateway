@@ -63,10 +63,10 @@ pipelines:
         - log: 
             action: 
               message: 'profiles ${req.method}'
+        - keycloak-protect:
         - expression:
           - action:
               jscode: 'req.headers["x-uid"] = req.kauth.grant.access_token.content.email;' 
-        - keycloak-protect:         
         - proxy:
           - action:
               serviceEndpoint: profile_service
@@ -113,10 +113,10 @@ pipelines:
         - log: 
             action: 
               message: 'todos ${req.method}'
+        - keycloak-protect:
         - expression:
           - action:
               jscode: 'req.headers["x-uid"] = req.kauth.grant.access_token.content.email'
-        - keycloak-protect:
         - proxy:
           - action:
               serviceEndpoint: todo_service
