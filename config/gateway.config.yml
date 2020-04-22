@@ -23,7 +23,7 @@ apiEndpoints:
       - '/about'
 serviceEndpoints:
   profile_service:
-    url: 'http://193.196.54.93:3000'
+    url: 'http://193.196.54.93:3000/'
   auth_service:
     url: 'http://193.196.54.85:8080/'
   todo_service:
@@ -48,6 +48,11 @@ pipelines:
     apiEndpoints:
       - profile
     policies:
+        - cors:
+          -
+            action:
+              origin: '*'
+              methods: 'HEAD,PUT,PATCH,POST,DELETE'
         - rewrite:         
           -
             condition:
@@ -58,15 +63,10 @@ pipelines:
         - log: 
             action: 
               message: 'profiles ${req.method}'
-        - cors:
-          -
-            action:
-              origin: '*'
-              methods: 'HEAD,PUT,PATCH,POST,DELETE'
-        - keycloak-protect:
         - expression:
           - action:
-              jscode: 'req.headers["x-uid"] = req.kauth.grant.access_token.content.email;'          
+              jscode: 'req.headers["x-uid"] = req.kauth.grant.access_token.content.email;' 
+        - keycloak-protect:         
         - proxy:
           - action:
               serviceEndpoint: profile_service
@@ -75,6 +75,11 @@ pipelines:
     apiEndpoints:
       - auth
     policies:
+        - cors:
+          -
+            action:
+              origin: '*'
+              methods: 'HEAD,PUT,PATCH,POST,DELETE'
         - rewrite:
           -
             condition:
@@ -82,11 +87,6 @@ pipelines:
               match: ^/api/v1/?(.*)$
             action:
               rewrite: /$1
-        - cors:
-          -
-            action:
-              origin: '*'
-              methods: 'HEAD,PUT,PATCH,POST,DELETE'
         - log: 
             action: 
               message: 'auth ${req.method}'
@@ -98,6 +98,11 @@ pipelines:
     apiEndpoints:
       - todo
     policies:
+        - cors:
+          -
+            action:
+              origin: '*'
+              methods: 'HEAD,PUT,PATCH,POST,DELETE'
         - rewrite:
           -
             condition:
@@ -108,15 +113,10 @@ pipelines:
         - log: 
             action: 
               message: 'todos ${req.method}'
-        - cors:
-          -
-            action:
-              origin: '*'
-              methods: 'HEAD,PUT,PATCH,POST,DELETE'
-        - keycloak-protect:
         - expression:
           - action:
               jscode: 'req.headers["x-uid"] = req.kauth.grant.access_token.content.email'
+        - keycloak-protect:
         - proxy:
           - action:
               serviceEndpoint: todo_service
@@ -125,16 +125,15 @@ pipelines:
     apiEndpoints:
       - frontend
     policies:
-      - log: 
-          action: 
-            message: 'frontend ${req.method}'
       - cors:
         -
           action:
             origin: '*'
             methods: 'HEAD,PUT,PATCH,POST,DELETE'
+      - log: 
+          action: 
+            message: 'frontend ${req.method}'
       - proxy:
         - action:
             serviceEndpoint: frontend_service
             changeOrigin: false
-            #xfwd: true
