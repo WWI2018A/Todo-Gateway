@@ -21,6 +21,7 @@ apiEndpoints:
       - '/todoLists'
       - '/profiles'
       - '/about'
+      - '/static*'
 serviceEndpoints:
   profile_service:
     url: 'http://193.196.54.93:3000/'
