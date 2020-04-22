@@ -53,6 +53,9 @@ pipelines:
             action:
               origin: '*'
               methods: 'HEAD,PUT,PATCH,POST,DELETE'
+              preflightContinue: true
+              optionsSuccessStatus: 204
+              credentials: true
         - rewrite:         
           -
             condition:
@@ -80,6 +83,9 @@ pipelines:
             action:
               origin: '*'
               methods: 'HEAD,PUT,PATCH,POST,DELETE'
+              preflightContinue: true
+              optionsSuccessStatus: 204
+              credentials: true
         - rewrite:
           -
             condition:
@@ -103,6 +109,9 @@ pipelines:
             action:
               origin: '*'
               methods: 'HEAD,PUT,PATCH,POST,DELETE'
+              preflightContinue: true
+              optionsSuccessStatus: 204
+              credentials: true
         - rewrite:
           -
             condition:
@@ -130,6 +139,9 @@ pipelines:
           action:
             origin: '*'
             methods: 'HEAD,PUT,PATCH,POST,DELETE'
+            preflightContinue: true
+              optionsSuccessStatus: 204
+              credentials: true
       - log: 
           action: 
             message: 'frontend ${req.method}'
